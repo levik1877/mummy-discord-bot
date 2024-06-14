@@ -4,11 +4,13 @@ from main import db
 
 
 class RegistrationCommands(commands.Cog):
-
-    def __init__(self, bot: commands.Bot): # Тутпросто ебейшая путаница с переменной bot, я ваще хз как это работает, но менять имя никак нельзя!
+    """Хранит набор команд для регистрации"""
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
+
     @commands.command()
     async def reg(self, ctx):
+        """Регистрирует нового пользователя"""
         author = ctx.message.author
         if not db.check_user(author):
             user = db.add_user(author)
@@ -18,5 +20,6 @@ class RegistrationCommands(commands.Cog):
             await ctx.message.reply(content="Ты уже в зарегистрирован")
 
 
-async def setup(bot: commands.Bot): # Тутпросто ебейшая путаница с переменной bot, я ваще хз как это работает, но менять имя никак нельзя!
+async def setup(bot: commands.Bot):
+    """Служебная функция. Добавляет данный класса с командами в объект бота"""
     await bot.add_cog(RegistrationCommands(bot))

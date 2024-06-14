@@ -8,6 +8,7 @@ from scr.cfg import sport_phrases
 
 
 def get_exersice_four_select(database: SportDatabase) -> list:
+    """Подготавливает поля для меню выбора упражнений"""
     exersice = database.get_exercises()
     for row in range(len(exersice)):
         exersice[row] = discord.SelectOption(label=str(exersice[row][0]))
@@ -36,7 +37,10 @@ class SportMenu(discord.ui.View):
         style=discord.ButtonStyle.green
     )
     async def diary(self, interaction: discord.Interaction, button: discord.ui.Button):
-        await interaction.response.edit_message(content="Выбери упражнение, повтор котого хочешь записать.", view=SelectExersice())
+        await interaction.response.edit_message(
+            content="Выбери упражнение, повтор котого хочешь записать.",
+            view=SelectExersice()
+        )
 
     @discord.ui.button(
         label="Выйти",
@@ -45,7 +49,7 @@ class SportMenu(discord.ui.View):
     async def exit(self, interaction: discord.Interaction, button: discord.ui.Button):
         self.stop()
         await interaction.response.edit_message(
-            content=str_func.random_phrase(sport_phrases.end_of_train_phrases),
+            content=phrases_func.random_phrase(sport_phrases.end_of_train_phrases),
             view=None,
             embed=None,
             delete_after=2.0
@@ -89,7 +93,7 @@ class RepeatsForm(discord.ui.Modal):
         )
 
         await interaction.response.edit_message(
-            content=f"SPORT MENU\n{str_func.random_phrase(sport_phrases.sport_greeting_phrases)}",
+            content=f"SPORT MENU\n{phrases_func.random_phrase(sport_phrases.sport_greeting_phrases)}",
             embed=embed,
             view=SportMenu()
         )

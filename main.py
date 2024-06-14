@@ -14,11 +14,13 @@ bot = commands.Bot(command_prefix='$', intents=discord.Intents.all(), case_insen
 
 @bot.event
 async def on_ready():
+    """Вызывается когда бот начинает работать"""
     print('К вашим услугам хозяин!')
     await bot.change_presence(activity=discord.Game(name=' $info'))
 
 
 async def load_extension():
+    """Собирает все классы Cogs с командами, добавляя их к объекту бота"""
     for filename in os.listdir("scr/cogs"):
         if filename.endswith(".py"):
             # cut off the .py from the file name
@@ -26,6 +28,7 @@ async def load_extension():
 
 
 async def main():
+    """Подготавливает всё к запуску бота"""
     from scr.cfg.TOKEN import token
     async with bot:
         await load_extension()

@@ -11,12 +11,13 @@ import scr.cfg.sport_phrases as sport_phrases
 
 
 class SportCommands(commands.Cog):
-
-    def __init__(self, bot: commands.Bot): # Тутпросто ебейшая путаница с переменной bot, я ваще хз как это работает, но менять имя никак нельзя!
+    """Хранит набор команд, связанных со спортом"""
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
     @commands.command()
     async def sport(self, ctx):
+        """Вызывает меню спорта"""
         auth = ctx.message.author
         if db.check_user(auth):
             view = sport_menu.SportMenu()
@@ -30,7 +31,8 @@ class SportCommands(commands.Cog):
     # сделать команду для добавления нового упражнения
 
 
-async def setup(bot: commands.Bot): # Тутпросто ебейшая путаница с переменной bot, я ваще хз как это работает, но менять имя никак нельзя!
+async def setup(bot: commands.Bot):
+    """Служебная функция. Добавляет данный класса с командами в объект бота"""
     await bot.add_cog(SportCommands(bot))
 
 
