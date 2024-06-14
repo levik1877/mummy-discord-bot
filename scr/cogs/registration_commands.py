@@ -1,6 +1,6 @@
 from discord.ext import commands
 
-from scr.cogs.general_commands import bot, db
+from main import db
 
 
 class RegistrationCommands(commands.Cog):
