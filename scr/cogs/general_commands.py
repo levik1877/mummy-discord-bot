@@ -1,9 +1,10 @@
+import discord.ext.commands
 from discord.ext import commands
 
 from main import db
-
 from scr.phrases_func import dict_to_str
-import scr.cfg.phrases as phrases
+from scr.cfg import phrases
+from scr.command_author_check import command_author_check
 
 
 class GeneralCommands(commands.Cog):
@@ -22,6 +23,11 @@ class GeneralCommands(commands.Cog):
                 await auth.send(ctx.message.author.mention + phrases.slaves_greeting + dict_to_str(phrases.slaves_commands))
         else:
             await auth.send(ctx.message.author.mention + phrases.general_greeting + dict_to_str(phrases.slaves_commands))
+
+    @commands.command()
+    @command_author_check(1488)
+    async def test(self, ctx):
+        await ctx.send("GG")
 
 
 async def setup(bot: commands.Bot):

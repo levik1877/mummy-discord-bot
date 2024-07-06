@@ -1,0 +1,43 @@
+logs.py 2024-06-30 16:55:45,460 INFO start logger
+client.py 2024-06-30 16:55:45,461 WARNING PyNaCl is not installed, voice will NOT be supported
+logs.py 2024-06-30 16:55:45,462 ERROR division by zero
+Traceback (most recent call last):
+  File "C:\Users\levvo\Desktop\mummy-discord-bot\scr\logs.py", line 24, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\levvo\Desktop\mummy-discord-bot\main.py", line 24, in abb
+    a = 2/0
+        ~^~
+ZeroDivisionError: division by zero
+logs.py 2024-06-30 16:55:45,470 ERROR division by zero
+Traceback (most recent call last):
+  File "C:\Users\levvo\Desktop\mummy-discord-bot\scr\logs.py", line 24, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\levvo\Desktop\mummy-discord-bot\main.py", line 24, in abb
+    a = 2/0
+        ~^~
+ZeroDivisionError: division by zero
+client.py 2024-06-30 16:55:45,478 INFO logging in using static token
+gateway.py 2024-06-30 16:55:46,672 INFO Shard ID None has connected to Gateway (Session ID: 5dca34f591dc77b31d11fc645f0fe966).
+main.py 2024-06-30 16:55:48,694 INFO Bot has been started.
+logs.py 2024-06-30 17:02:46,639 INFO start logger
+client.py 2024-06-30 17:02:46,640 WARNING PyNaCl is not installed, voice will NOT be supported
+logs.py 2024-06-30 17:02:46,640 ERROR division by zero
+Traceback (most recent call last):
+  File "C:\Users\levvo\Desktop\mummy-discord-bot\scr\logs.py", line 24, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\levvo\Desktop\mummy-discord-bot\main.py", line 24, in abb
+    a = 2/0
+        ~^~
+ZeroDivisionError: division by zero
+logs.py 2024-06-30 17:02:46,646 ERROR division by zero
+Traceback (most recent call last):
+  File "C:\Users\levvo\Desktop\mummy-discord-bot\scr\logs.py", line 24, in wrapper
+    result = func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\levvo\Desktop\mummy-discord-bot\main.py", line 24, in abb
+    a = 2/0
+        ~^~
+ZeroDivisionError: division by zero

@@ -26,11 +26,15 @@ class SportDatabase(Database):
         """)
         return cursor.fetchall()
 
-    def add_exersice(self, exersice: str) -> None:
+    # прокидывать ошибку если в аргументе type_ недопустимое значение
+    def add_exersice(self, name: str, type_: str) -> None:
+        """Добавляет упражнение в базу данных
+        type_ может принимать значения "time" или "count"
+        """
         cursor = self._database.cursor()
         cursor.execute(f"""
-            INSERT INTO exercises (name)
-            values ('{exersice}');
+            INSERT INTO exercises (name, type)
+            values ('{name}', '{type_}');
         """)
         self._database.commit()
 

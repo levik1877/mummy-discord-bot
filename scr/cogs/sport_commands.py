@@ -3,11 +3,12 @@ from discord.ext import commands
 
 from main import db, sdb
 
-import scr.phrases_func as str_func
+from scr import phrases_func
 from scr.bot_ui import sport_menu
 
-import scr.cfg.phrases as phrases
-import scr.cfg.sport_phrases as sport_phrases
+from scr.cfg import phrases, permissions
+from scr.cfg import sport_phrases
+from scr.command_author_check import command_author_check
 
 
 class SportCommands(commands.Cog):
@@ -16,19 +17,26 @@ class SportCommands(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    @command_author_check()
     async def sport(self, ctx):
         """Вызывает меню спорта"""
         auth = ctx.message.author
-        if db.check_user(auth):
-            view = sport_menu.SportMenu()
-            await auth.send(
-                content=str_func.random_phrase(sport_phrases.sport_greeting_phrases) + sport_phrases.sport_greeting,
-                view=view
-            )
-        else:
-            await ctx.reply(phrases.no_reg_answer + str_func.random_phrase(phrases.no_reg_answer_phrase))
+        view = sport_menu.SportMenu()
+        await auth.send(
+            content=phrases_func.random_phrase(sport_phrases.sport_greeting_phrases) + sport_phrases.sport_greeting,
+            view=view
+        )
 
-    # сделать команду для добавления нового упражнения
+    @commands.command()
+    @command_author_check(permissions_level=permissions.admin)
+    async def add_exersice(self, ctx, new_exersice_name: str, exersice_type: str):
+        """Добавляет новое упражнение в базу данных"""
+        sdb.add_exersice(new_exersice_name, exersice_type)
+        await ctx.reply(phrases_func.random_phrase(phrases.successfully_answer_phrases))
+
+    @add_exersice.error
+    async def add_exersice_error(self, ctx, error: discord.ext.commands.CommandError):
+        await ctx.send(phrases.invalid_command_args + "$add_exersice <Название упражнения> <Тип упражнения (может принимать значения count и time)>")
 
 
 async def setup(bot: commands.Bot):

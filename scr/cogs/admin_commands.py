@@ -1,10 +1,13 @@
+import discord.ext.commands
 from discord.ext import commands
 from discord import Member
 
 from main import db
-import scr.phrases_func as str_func
+from scr import phrases_func
 
-import scr.cfg.phrases as phrases
+from scr.cfg import phrases, permissions
+from scr.command_author_check import command_author_check
+from scr import error_replies
 
 
 class AdminCommands(commands.Cog):
@@ -13,32 +16,28 @@ class AdminCommands(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    @command_author_check(permissions_level=permissions.root)
     async def editper(self, ctx, member: Member, level: int):
         """Изменяет уровень прав юзера"""
-        auth = ctx.message.author
-        if db.check_user(auth):
-            if db.get_user(auth).permissions_level == 1488:
-                user = db.get_user(member)
-                db.edit_user_permission_level(user, level)
-                await ctx.reply(str_func.random_phrase(phrases.successfully_answer_phrases))
-            else:
-                await ctx.reply(str_func.random_phrase(phrases.rejection_phrases))
-        else:
-            await ctx.reply(str_func.random_phrase(phrases.no_reg_answer_phrase) + phrases.no_reg_answer)
+        user = db.get_user(member)
+        db.edit_user_permission_level(user, level)
+        await ctx.reply(phrases_func.random_phrase(phrases.successfully_answer_phrases))
+
+    @editper.error
+    async def editper_error(self, ctx, error: discord.ext.commands.CommandError):
+        await ctx.send(phrases.invalid_command_args + "$editper <Пинг пользователя> <Новый уровень прав>")
 
     @commands.command()
+    @command_author_check(permissions_level=permissions.root)
     async def editmoney(self, ctx, member: Member, value: float):
         """Изменяет количество денег у юзера"""
-        auth = ctx.message.author
-        if db.check_user(auth):
-            if db.get_user(auth).permissions_level == 1488:
-                user = db.get_user(member)
-                db.edit_user_money(user, value)
-                await ctx.reply(str_func.random_phrase(phrases.successfully_answer_phrases))
-            else:
-                await ctx.reply(str_func.random_phrase(phrases.rejection_phrases))
-        else:
-            await ctx.reply(str_func.random_phrase(phrases.no_reg_answer_phrase) + phrases.no_reg_answer)
+        user = db.get_user(member)
+        db.edit_user_money(user, value)
+        await ctx.reply(phrases_func.random_phrase(phrases.successfully_answer_phrases))
+
+    @editmoney.error
+    async def editmoney_error(self, ctx, error: discord.ext.commands.CommandError):
+        await ctx.send(phrases.invalid_command_args + "$editmoney <Пинг пользователя> <Новое число денег>")
 
 
 async def setup(bot: commands.Bot):
